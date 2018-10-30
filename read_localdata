@@ -1,0 +1,31 @@
+import torch
+import torch.nn as nn
+import torchvision
+import torchvision.transforms as transforms
+import pandas as pd
+
+
+# Hyper-parameters
+input_size = 784
+num_classes = 10
+num_epochs = 5
+batch_size = 100
+learning_rate = 0.001
+
+data = pd.read_csv(r"C:\Users\fab\Desktop\que\second\merge\train2.csv", header=None)   # local csv data
+lp = pd.read_csv(r"C:\Users\fab\Desktop\que\second\merge\lp.csv", header=None)
+label = lp.iloc[:,1]
+train = pd.concat([data,label],axis=1)
+train = train.values
+ts = torch.from_numpy(train)
+print(ts)
+# Data loader (input pipeline)
+train_loader = torch.utils.data.DataLoader(dataset=ts,
+                                           batch_size=batch_size,
+                                           shuffle=True)
+                                           
+for i,data in enumerate(train_loader):
+    da  = data[:,:-2]
+    lab = data[:,-1]
+    print(da)
+    print(lab)
